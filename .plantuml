@@ -1,0 +1,39 @@
+@startuml
+class Quiz {
++winner_quiz_participant_id
+}
+class QuizEvent {
++quiz_id
+}
+class QuizParticipant {
++scores
+}
+class QuizWinners{
++project_id
++quiz_participant_id
+}
+class Prizes{
++project_id
++name
+}
+class Project {
++month_slug
++winners_quantity
++date_start
++date_end
+}
+class Question {
++project_id
++text
+}
+class Answer {
++question_id
++text
++isCorrect
+}
+Project "1" *-- "4" Question
+Question "1" *-- "3" Answer
+QuizWinners -- QuizParticipant
+QuizWinners -- Project
+Project "1" *-- "many" Prizes
+@enduml
