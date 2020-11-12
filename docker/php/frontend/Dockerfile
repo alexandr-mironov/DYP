@@ -42,7 +42,7 @@ RUN php composer.phar i
 
 RUN php requirements.php
 
-# --env=Production --overwrite=All
-RUN php init --env=Production --overwrite=All
+ARG ENVIRONMENT
+RUN php init --env=$ENVIRONMENT --overwrite=All
 
 CMD ["php-fpm"]
