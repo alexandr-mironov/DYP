@@ -1,4 +1,7 @@
 <?php
+
+$commonComponents = require __DIR__ . '/../../common/config/components.php';
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -21,7 +24,7 @@ return [
             'namespace' => 'common\fixtures',
           ],
     ],
-    'components' => [
+    'components' => array_merge([
         'log' => [
             'targets' => [
                 [
@@ -30,6 +33,6 @@ return [
                 ],
             ],
         ],
-    ],
+    ], $commonComponents),
     'params' => $params,
 ];

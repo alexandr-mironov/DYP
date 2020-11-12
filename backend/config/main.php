@@ -1,4 +1,7 @@
 <?php
+
+$commonComponents = require __DIR__ . '/../../common/config/components.php';
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -12,7 +15,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'components' => [
+    'components' => array_merge([
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
@@ -45,6 +48,6 @@ return [
             ],
         ],
         */
-    ],
+    ], $commonComponents),
     'params' => $params,
 ];
