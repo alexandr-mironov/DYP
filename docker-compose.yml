@@ -48,8 +48,8 @@ services:
     build:
       context: .
       dockerfile: docker/php/frontend/Dockerfile
-      args:
-        - ENVIRONMENT=${ENVIRONMENT}
+#      args:
+#        - ENVIRONMENT=${ENVIRONMENT}
     ports:
       - 20080:80
     volumes:
@@ -59,6 +59,7 @@ services:
     depends_on:
       - postgres
     environment:
+      - ENVIRONMENT
       - DB_DSN
       - DB_DB
       - DB_USERNAME
@@ -69,6 +70,7 @@ services:
       - MAILER_PASSWORD
       - MAILER_PORT
       - MAILER_ENCRYPTION
+    command: php init --env=${ENVIRONMENT} --overwrite=All
     networks:
       - default
 
@@ -79,10 +81,10 @@ services:
     ports:
       - 80:80
       - 443:443
+      - "11050:11050"
     volumes:
       - "phpsocket:/var/run"
       - ./:/app
-      - "./docker/nginx/templates/:/etc/nginx/templates/"
     environment:
       - ENV_DOMAIN
       - ENV_FRONTEND_PREFIX
