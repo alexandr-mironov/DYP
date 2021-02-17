@@ -18,36 +18,10 @@ services:
       - default
       - default-network
 
-  php-backend:
+  php:
     build:
       context: .
-      dockerfile: docker/php/backend/Dockerfile
-    ports:
-      - 21080:80
-    volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app
-      - "phpsocket:/var/run"
-    depends_on:
-      - postgres
-    environment:
-      - DB_DSN
-      - DB_DB
-      - DB_USERNAME
-      - DB_PASSWORD
-      - DB_PORT
-      - MAILER_HOST
-      - MAILER_USERNAME
-      - MAILER_PASSWORD
-      - MAILER_PORT
-      - MAILER_ENCRYPTION
-    networks:
-      - default
-
-  php-frontend:
-    build:
-      context: .
-      dockerfile: docker/php/frontend/Dockerfile
+      dockerfile: docker/php/Dockerfile
       args:
         - ENVIRONMENT=${ENVIRONMENT}
     ports:
@@ -80,7 +54,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      - "11050:11050"
     volumes:
       - "phpsocket:/var/run"
       - ./:/app
@@ -90,8 +63,7 @@ services:
       - ENV_BACKEND_PREFIX
     command: /bin/bash -c "envsubst '$$ENV_DOMAIN $$ENV_FRONTEND_PREFIX $$ENV_BACKEND_PREFIX' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     depends_on:
-      - php-backend
-      - php-frontend
+      - php
     networks:
       - default
 
