@@ -50,7 +50,7 @@ http {
             fastcgi_intercept_errors on;
             fastcgi_index index.php;
             include fastcgi_params;
-            fastcgi_pass unix:/var/run/frontend.sock;
+            fastcgi_pass unix:/var/run/php-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
         }
     }
@@ -75,7 +75,7 @@ http {
             fastcgi_intercept_errors on;
             fastcgi_index index.php;
             include fastcgi_params;
-            fastcgi_pass unix:/var/run/backend.sock;
+            fastcgi_pass unix:/var/run/php-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
         }
     }
