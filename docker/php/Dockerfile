@@ -10,13 +10,12 @@ RUN apt-get update && apt-get install -y \
         libmcrypt-dev \
         libpng-dev \
         libzip-dev \
+        libpq-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install sockets \
-    && docker-php-ext-install bcmath
-
-RUN apt-get install -y libpq-dev \
+    && docker-php-ext-install bcmath \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql \
     && docker-php-ext-install pcntl
@@ -32,7 +31,7 @@ ADD docker/php/frontend/zz.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 #&& docker-php-ext-configure intl \
 #&& docker-php-ext-install intl
 
-COPY . /app
+COPY frontend /app
 # Указываем рабочую директорию для PHP
 WORKDIR /app
 
